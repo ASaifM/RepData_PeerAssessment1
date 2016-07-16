@@ -26,15 +26,10 @@ Total number of steps taken per day:
 aggregated_steps <- aggregate(steps ~ date, activity, sum, rm.na = TRUE)
 ```
 
-Head of aggregated steps:
-```{r}
-head(aggregated_steps)
-```
-
 plot a histogram:
 ```{r}
 library(ggplot2)
-g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin")
+g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin",bins=20)
 print(g)
 ```
 
@@ -57,8 +52,7 @@ print(g)
 
 Maximum number of average steps:
 ```{r}
- head(average_steps[order(average_steps$steps,decreasing = TRUE),],1)
- head(activity[order(activity$steps,decreasing = TRUE),],1)
+average_steps[order(average_steps$steps,decreasing = TRUE),][1,]
 
 ```
 
@@ -70,7 +64,7 @@ Number of rows that contain NA:
 nrow(activity[is.na(activity),])
 ```
  
-Compensate na values by the mean of that interval:
+Compensate NA values by the mean of that interval:
 ```{r}
 intervals <-  unique(activity[,3])
 for (i in 1:length(intervals)){
@@ -83,7 +77,7 @@ for (i in 1:length(intervals)){
 New histogram:
 ```{r}
 aggregated_steps <- aggregate(steps ~ date, activity, sum, rm.na = TRUE)
-g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin")
+g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin",bins=20)
 print(g) 
 mean(aggregated_steps$steps,na.rm=TRUE)
 median(aggregated_steps$steps,na.rm=TRUE)

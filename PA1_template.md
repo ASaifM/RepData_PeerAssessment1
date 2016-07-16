@@ -35,35 +35,15 @@ Total number of steps taken per day:
 aggregated_steps <- aggregate(steps ~ date, activity, sum, rm.na = TRUE)
 ```
 
-Head of aggregated steps:
-
-```r
-head(aggregated_steps)
-```
-
-```
-##         date steps
-## 1 2012-10-02   127
-## 2 2012-10-03 11353
-## 3 2012-10-04 12117
-## 4 2012-10-05 13295
-## 5 2012-10-06 15421
-## 6 2012-10-07 11016
-```
-
 plot a histogram:
 
 ```r
 library(ggplot2)
-g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin")
+g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin",bins=20)
 print(g)
 ```
 
-```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-```
-
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 Mean and median of the number of steps:
 
@@ -94,26 +74,17 @@ g <- ggplot(average_steps, aes(x=interval,y=steps))+geom_line()
 print(g)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 Maximum number of average steps:
 
 ```r
- head(average_steps[order(average_steps$steps,decreasing = TRUE),],1)
+average_steps[order(average_steps$steps,decreasing = TRUE),][1,]
 ```
 
 ```
 ##     interval    steps
 ## 104      835 206.1698
-```
-
-```r
- head(activity[order(activity$steps,decreasing = TRUE),],1)
-```
-
-```
-##       steps       date interval
-## 16492   806 2012-11-27      615
 ```
 
 
@@ -129,7 +100,7 @@ nrow(activity[is.na(activity),])
 ## [1] 2304
 ```
  
-Compensate na values by the mean of that interval:
+Compensate NA values by the mean of that interval:
 
 ```r
 intervals <-  unique(activity[,3])
@@ -144,15 +115,11 @@ New histogram:
 
 ```r
 aggregated_steps <- aggregate(steps ~ date, activity, sum, rm.na = TRUE)
-g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin")
+g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin",bins=20)
 print(g) 
 ```
 
-```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-```
-
-![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 ```r
 mean(aggregated_steps$steps,na.rm=TRUE)
@@ -187,4 +154,4 @@ g <- ggplot(sum_steps_weekdays, aes(x=interval,y=steps,color=weekday))+geom_line
 print(g)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
