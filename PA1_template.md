@@ -1,6 +1,5 @@
 # Reproducible Research: Peer Assessment 1
 
-
 ## Loading and preprocessing the data
 
 
@@ -39,7 +38,7 @@ plot a histogram:
 
 ```r
 library(ggplot2)
-g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin",bins=20)
+g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin",bins=20)+ggtitle("Histogram of total number of steps taken each day")
 print(g)
 ```
 
@@ -70,7 +69,10 @@ Time series:
 
 ```r
 average_steps <- aggregate(steps ~ interval, activity, mean, rm.na = TRUE)
-g <- ggplot(average_steps, aes(x=interval,y=steps))+geom_line()
+g <- ggplot(average_steps, aes(x=interval,y=steps))
+g <- g + ggtitle("Average number of steps for each interval")
+g <- g + ylab('Average number of steps across all days')
+g <- g +geom_line()
 print(g)
 ```
 
@@ -116,6 +118,7 @@ New histogram:
 ```r
 aggregated_steps <- aggregate(steps ~ date, activity, sum, rm.na = TRUE)
 g <- ggplot(aggregated_steps,aes(x=steps))+geom_histogram(stat="bin",bins=20)
+g <- g+ggtitle("Histogram of total number of steps per day after updating NA values")
 print(g) 
 ```
 
@@ -151,6 +154,7 @@ weekday_factor <- function(date) {
 activity$weekday <- sapply(activity$date,weekday_factor)
 sum_steps_weekdays <- aggregate(steps ~ interval + weekday, activity, sum, rm.na = TRUE)
 g <- ggplot(sum_steps_weekdays, aes(x=interval,y=steps,color=weekday))+geom_line()+facet_wrap(~weekday)
+g <- g+ggtitle("Total steps per interval on weekdays and weekends")
 print(g)
 ```
 
