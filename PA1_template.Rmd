@@ -59,7 +59,7 @@ average_steps[order(average_steps$steps,decreasing = TRUE),][1,]
 ```
 
 
-## Inputing missing values
+## Imputing missing values
 
 Number of rows that contain NA:
 ```{r}
